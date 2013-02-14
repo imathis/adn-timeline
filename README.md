@@ -57,6 +57,7 @@ The heading will remain and posts will be added below in a `<ul>`.
 | `callback` | (function(){})          | Provide a callback function                   |
 | `render`   | AdnTimeline.render      | Provide a custom html render function         |
 
+Note: Setting `cookie` to false will disable cookie storage. This is especially helpful when testing.
 
 ### Configure with data attributes
 
