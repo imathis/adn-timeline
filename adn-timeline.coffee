@@ -62,7 +62,7 @@ AdnTimeline =
       text += post.text
       text += "</p></blockquote>"
       text += "<figcaption>"
-      text += "<a href='#{post.url}'><time datetime='#{post.date}'>#{post.display_date}</time></a>"
+      text += "<a href='#{post.url}' class='adn-post-url'><time datetime='#{post.date}'>#{post.display_date}</time></a>"
       text += "</figcaption>"
       text += "</figure></li>"
     text += "</ul>"

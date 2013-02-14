@@ -6,3 +6,5 @@ File.open("adn-timeline.js", 'w') { |f| f.write js }
 
 ugjs = Uglifier.new.compile js
 File.open("adn-timeline.min.js", 'w') { |f| f.write ugjs }
+
+#system 'sass style.scss'

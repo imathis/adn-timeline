@@ -1,6 +1,6 @@
 
 /*!
-App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
+App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
 */
 
 
@@ -74,6 +74,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
     render: function(el, posts) {
       var post, text, _i, _len;
       text = "<ul id='adn-timeline-imathis'>";
+      console.log(this);
       for (_i = 0, _len = posts.length; _i < _len; _i++) {
         post = posts[_i];
         text += "<li><figure class='post'>";
@@ -81,7 +82,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
         text += post.text;
         text += "</p></blockquote>";
         text += "<figcaption>";
-        text += "<a href='" + post.url + "'><time datetime='" + post.date + "'>" + post.display_date + "</time></a>";
+        text += "<a href='" + post.url + "' class='adn-post-url'><time datetime='" + post.date + "'>" + post.display_date + "</time></a>";
         text += "</figcaption>";
         text += "</figure></li>";
       }
