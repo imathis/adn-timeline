@@ -1,15 +1,9 @@
 ###!
-App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
+App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
 ###
 
-#Call pattern:
-#()
-#({el: '.adn-feed'})
-#([{el: '.adn-feed'}, {el: '.adn-other-feed'}])
 
-#<div class='adn-timeline' data-username='imathis' data-count='4' data-replies='false' data-reposts='false' data-cookie='adn-feed'></div>
-
-window.AdnTimeline =
+AdnTimeline =
   defaults:
     el: '.adn-timeline'
     count: 4
@@ -60,7 +54,8 @@ window.AdnTimeline =
 
   # Convert posts to HTML and render them in target element.
   render: (el, posts) ->
-    text  = "<ul>"
+    text  = "<ul id='adn-timeline-imathis'>"
+    console.log @
     for post in posts
       text += "<li><figure class='post'>"
       text += "<blockquote><p>"
@@ -208,3 +203,10 @@ window.AdnTimeline =
         else if days is 7   then say.last_week
         else                     weeks + say.weeks_ago
       
+if exports? 
+  if module? and module.exports
+    exports = module.exports = AdnTimeline
+  else
+    exports.AdnTimeline = AdnTimeline
+else
+  @AdnTimeline = AdnTimeline

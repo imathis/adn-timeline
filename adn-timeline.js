@@ -5,9 +5,10 @@ App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
 
 
 (function() {
-  var __slice = [].slice;
+  var AdnTimeline, exports,
+    __slice = [].slice;
 
-  window.AdnTimeline = {
+  AdnTimeline = {
     defaults: {
       el: '.adn-timeline',
       count: 4,
@@ -72,7 +73,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
     },
     render: function(el, posts) {
       var post, text, _i, _len;
-      text = "<ul>";
+      text = "<ul id='adn-timeline-imathis'>";
       for (_i = 0, _len = posts.length; _i < _len; _i++) {
         post = posts[_i];
         text += "<li><figure class='post'>";
@@ -265,5 +266,15 @@ App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
       }
     }
   };
+
+  if (typeof exports !== "undefined" && exports !== null) {
+    if ((typeof module !== "undefined" && module !== null) && module.exports) {
+      exports = module.exports = AdnTimeline;
+    } else {
+      exports.AdnTimeline = AdnTimeline;
+    }
+  } else {
+    this.AdnTimeline = AdnTimeline;
+  }
 
 }).call(this);
