@@ -72,10 +72,10 @@ Using an options hash allows us to change the selector and use a custom callback
     $(document).ready(function(){
       AdnTimeline.init({
           el:      '.timeline'
-        , count:   5 
-        , replies: true 
-        , reposts: false 
-        , cookie:  'delicious-cookie' 
+        , count:   5
+        , replies: true
+        , reposts: false
+        , cookie:  'delicious-cookie'
         , callback: function (data) { console.log(data) }
         , renderer: function (el, data) { /* rendering code here */ }
       })
@@ -84,11 +84,11 @@ Using an options hash allows us to change the selector and use a custom callback
 ### Combine the options hash and the data attributes
 
 Options are loaded in order of the element data attributes, the options hash, and finally the defaults. This means we can combine methods of setting options like this.
-    
+
     $(document).ready(function(){
       AdnTimeline.init({
           el:      '.timeline'
-        , replies: true 
+        , replies: true
       })
     })
 
@@ -97,7 +97,35 @@ Options are loaded in order of the element data attributes, the options hash, an
 
 Here we have changed the selector used, both accounts will show replies, and the Octopress account will show reposts.
 
-### HTML Rendering
+### Configuring with multiple hashes
+
+In the example above we set reposts to true for @Octopress but not for @imathis. If we configured it in the options hash it would have applied to both accounts. It's
+probably easier to set that configuration with a data attribute, but AdnTimeline also accepts an array of option hashes. We do the same configuration above like this.
+
+    $(document).ready(function(){
+      AdnTimeline.init([
+        {
+            el:       '.timeline-imathis'
+          , username: 'imathis'
+          , replies:  true
+        },{
+            el:       '.timeline-octopress'
+          , username: 'octopress'
+          , replies:  true
+          , reposts:  true
+        }
+      ])
+    })
+
+Then the HTML will no longer need `data-username` attributes since the configuration is derived from the options array. Note that the `el` property now must be unique.
+
+    <div class='timeline-imathis'></div>
+    <div class='timeline-octopress'></div>
+
+An array of options allows us to set different callbacks and rendering functions based on each username. It's generally better to configure timelines with the data
+attributes, but in some cases it might be helpful to configure things more dynamically with javascript.
+
+## HTML Rendering
 
 The default render function appends the following HTML template to the target element(s).
 
@@ -124,14 +152,14 @@ If you haven't seen a figure used to group a `blockquote` with metadata, take a 
 If you have an alternate proposal I'd love to hear it. Currently the strongest argument against this markup is that people often treat blockquotes or figures with global styling not anticipating them to be used
 like this. This would mean they would have to change their site designs to be less broad or override some styles to integrate this timeline.
 
-### Using a custom render function
+## Using a custom render function
 
 It's fairly easy add a custom render function. The function will receive an jQuery wrapped element and a array of post data hashes with the following format:
 
-    author: { 
+    author: {
       username:   post.user.username,
       name:       post.user.name,
-      url:        post.user.canonical_url 
+      url:        post.user.canonical_url
     }
     url:          post.canonical_url
     date:         post.created_at

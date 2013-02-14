@@ -1,5 +1,5 @@
 ###!
-App.net timeline fetcher (c) Brandon Mathis - @imathis // MIT License
+App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
 ###
 
 #Call pattern:
@@ -30,7 +30,7 @@ window.AdnTimeline =
       # Options are loaded in order of element data-attributes, passed options, and finally defaults.
       $(options.el or @defaults.el).each (i, el) =>
         el = $(el)
-        user =  @cascadeOptions el.attr('data-username'), options.user 
+        user =  @cascadeOptions el.attr('data-username'), options.username
         return console.error 'You need to provide an App.net username' unless user?
         renderer = options.render or @render
         callback = options.callback or (->)

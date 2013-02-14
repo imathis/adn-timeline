@@ -1,6 +1,6 @@
 
 /*!
-App.net timeline fetcher (c) Brandon Mathis - @imathis // MIT License
+App.net timeline fetcher (c) 2013 Brandon Mathis - @imathis // MIT License
 */
 
 
@@ -29,7 +29,7 @@ App.net timeline fetcher (c) Brandon Mathis - @imathis // MIT License
         $(options.el || this.defaults.el).each(function(i, el) {
           var callback, renderer, user;
           el = $(el);
-          user = _this.cascadeOptions(el.attr('data-username'), options.user);
+          user = _this.cascadeOptions(el.attr('data-username'), options.username);
           if (user == null) {
             return console.error('You need to provide an App.net username');
           }
