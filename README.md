@@ -2,6 +2,8 @@
 
 Display recent posts for one or more App.net accounts. The coffeescript source is pretty well documented if you're curious.
 
+[View the demo](http://imathis.github.com/adn-timeline).
+
 ## Dependencies
 
 1. jQuery (for ajax and dom manipulation)
