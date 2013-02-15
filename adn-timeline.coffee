@@ -55,7 +55,6 @@ AdnTimeline =
   # Convert posts to HTML and render them in target element.
   render: (el, posts) ->
     text  = "<ul id='adn-timeline-imathis'>"
-    console.log @
     for post in posts
       text += "<li><figure class='post'>"
       text += "<blockquote><p>"
@@ -203,6 +202,7 @@ AdnTimeline =
         else if days is 7   then say.last_week
         else                     weeks + say.weeks_ago
       
+# CommonJS Footer
 if exports? 
   if module? and module.exports
     exports = module.exports = AdnTimeline

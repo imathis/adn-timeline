@@ -74,7 +74,6 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
     render: function(el, posts) {
       var post, text, _i, _len;
       text = "<ul id='adn-timeline-imathis'>";
-      console.log(this);
       for (_i = 0, _len = posts.length; _i < _len; _i++) {
         post = posts[_i];
         text += "<li><figure class='post'>";
