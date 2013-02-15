@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+    <title>ADN Timeline Demo</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+    <script type="text/javascript" src="./javascripts/adn-timeline.js"></script>
+    <link href='./stylesheets/style.css' media="screen" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+      parseInputs = function(str) {
+        options = str.split('&').
+          map(function(s) { return s.split("=") }).
+          reduce(function(p, s) { return p[s[0]] = s[1], p }, {})
+        if (options.username === "") { alert('Please enter a username') }
+        if (options.count === '') {
+          delete options.count
+        } else {
+          options.count = parseInt(options.count)
+          if (options.count != options.count) alert('count must be a number') 
+        }
+        if (options.replies != null) options.replies = AdnTimeline.parseBool(options.replies)
+        if (options.reposts != null) options.reposts = AdnTimeline.parseBool(options.reposts)
+        return options
+      }
+
+      fetchTimeline = function() {
+        options = parseInputs($('.configuration').serialize())
+        options.render = function(el, data) {
+          el.html('')
+          $('.user-link').html('@'+options.username).attr('href', 'https://alpha-app.net/'+options.username)
+          AdnTimeline.render(el, data);
+        }
+        AdnTimeline.init(options)
+      }
+
+      $(document).ready(function(){
+        fetchTimeline();
+
+        $('input[type=checkbox]').on('change', function(e){
+          fetchTimeline();
+          e.preventDefault();
+        });
+        $('form').on('keypress', function(e){
+          if (e.which == 13) {
+            fetchTimeline();
+            e.preventDefault();
+          }
+        });
+      })
+    </script>
+  </head>
+  <body>    <form class='configuration'>
+    <form class='configuration'>
+      <input type=text name=username placeholder=username value=imathis>
+      <input type=text name=count placeholder=count value=4>
+      <span>
+        <input id=replies type=checkbox name=replies value=true> <label for=replies>replies</label>
+        <input id=reposts type=checkbox name=reposts value=true> <label for=reposts>reposts</label>
+      </span>
+    </form>
+    <h1><a href="https://alpha.app.net/imathis" class='user-link'>@imathis</a> on App.net</h1>
+    <div class='adn-timeline'></div>
+  </body>
+</html>
+

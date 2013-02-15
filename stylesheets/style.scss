@@ -1,0 +1,76 @@
+html {
+  background: #f0f0f0;
+  color: #444;
+  a {
+    color: #418afa;
+    text-decoration: none;
+    &:hover { 
+      color: #418afa;
+    }
+  }
+}
+body {
+  max-width: 500px; margin: 0 auto;
+  padding: 0 .8em .8em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+form {
+  padding: .8em;
+  background: #f5f5f5;
+  border: 1px solid rgba(#000, .08);
+}
+form span { white-space: nowrap; }
+input[name=count] { width: 4em; }
+input[name=username] { width: 15em; }
+input[type=checkbox] { 
+  position: relative; top: -.2em;
+  margin: 0;
+  padding-right: .2em;
+}
+input[type=text] {
+  margin-right: .2em;
+  padding: .3em;
+  border: 1px solid rgba(#000, .1);
+  font-size: 15px;
+}
+label {
+  margin-right: .2em;
+  padding-left: .1em;
+}
+
+h1 {
+  text-align: center;
+  a { text-decoration: none; }
+}
+.adn-timeline {
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    background: #f5f5f5;
+    border: 1px solid rgba(#000, .08);
+    margin-bottom: .4em;
+    padding: 1em 1em;
+  }
+
+  figure {
+    position: relative;
+    padding-right: 1.5em;
+  }
+
+  figure, blockquote, p { margin: 0; }
+
+  .adn-post-url {
+    position: absolute;
+    top: 0; right: 0;
+    text-decoration: none;
+    font-size: .8em;
+    color: #999;
+    z-index: 1;
+    &:hover { color: #418afa; }
+  }
+}
