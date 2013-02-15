@@ -34,7 +34,6 @@ input[type=checkbox] {
   padding-right: .2em; }
 
 input[type=text] {
-  max-width: 100%;
   margin-right: .2em;
   padding: .3em;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -59,7 +58,8 @@ h1 {
   padding: 1em 1em; }
 .adn-timeline figure {
   position: relative;
-  padding-right: 1.5em; }
+  padding-right: 1.5em;
+  word-wrap: break-word; }
 .adn-timeline figure, .adn-timeline blockquote, .adn-timeline p {
   margin: 0; }
 .adn-timeline .adn-post-url {
