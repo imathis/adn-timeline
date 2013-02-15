@@ -44,7 +44,8 @@ label {
   padding-left: .1em; }
 
 h1 {
-  text-align: center; }
+  text-align: center;
+  padding: 0.4em 0; }
   h1 a {
     text-decoration: none; }
 
@@ -72,3 +73,12 @@ h1 {
   z-index: 1; }
   .adn-timeline .adn-post-url:hover {
     color: #418afa; }
+
+footer {
+  padding-top: 1em;
+  text-align: center; }
+  footer a {
+    color: #aaa;
+    text-decoration: underline; }
+    footer a:hover {
+      color: #418afa; }

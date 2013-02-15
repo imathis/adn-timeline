@@ -1,3 +1,4 @@
+$link-color: #418afa;
 html {
   background: #f0f0f0;
   color: #444;
@@ -5,7 +6,7 @@ html {
     color: #418afa;
     text-decoration: none;
     &:hover { 
-      color: #418afa;
+      color: $link-color;
     }
   }
 }
@@ -41,6 +42,7 @@ label {
 
 h1 {
   text-align: center;
+  padding: .4em 0;
   a { text-decoration: none; }
 }
 .adn-timeline {
@@ -72,6 +74,16 @@ h1 {
     font-size: .8em;
     color: #999;
     z-index: 1;
-    &:hover { color: #418afa; }
+    &:hover { color: $link-color; }
+  }
+}
+
+footer {
+  padding-top: 1em;
+  text-align: center;
+  a {
+    color: #aaa;
+    text-decoration: underline;
+    &:hover { color: $link-color; }
   }
 }
