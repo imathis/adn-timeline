@@ -54,7 +54,7 @@ h1 {
 }
 .adn-timeline {
   ul {
-    @include animation(fade-in-bounce-in .4s);
+    @include animation(fade-in .4s ease-out);
     padding-left: 0;
     list-style: none;
   }
@@ -95,12 +95,7 @@ footer {
   }
 }
 
-@include keyframes(fade-in-bounce-in) {
-  0% {
-    opacity: 0;
-    @include scale(.95) }
-  100% {
-    opacity: 1;
-    @include scale(1) }
+@include keyframes(fade-in) {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
-

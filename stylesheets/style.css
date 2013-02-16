@@ -80,10 +80,10 @@ h1 a {
 
 /* line 56, style.scss */
 .adn-timeline ul {
-  -webkit-animation: fade-in-bounce-in 0.4s;
-  -moz-animation: fade-in-bounce-in 0.4s;
-  -o-animation: fade-in-bounce-in 0.4s;
-  animation: fade-in-bounce-in 0.4s;
+  -webkit-animation: fade-in 0.4s ease-out;
+  -moz-animation: fade-in 0.4s ease-out;
+  -o-animation: fade-in 0.4s ease-out;
+  animation: fade-in 0.4s ease-out;
   padding-left: 0;
   list-style: none;
 }
@@ -134,64 +134,50 @@ footer a:hover {
   color: #418afa;
 }
 
-@-moz-keyframes fade-in-bounce-in {
+@-moz-keyframes fade-in {
   /* line 99, style.scss */
   0% {
     opacity: 0;
-    -moz-transform: scale(0.95, 0.95);
-    transform: scale(0.95, 0.95);
   }
 
-  /* line 102, style.scss */
+  /* line 100, style.scss */
   100% {
     opacity: 1;
-    -moz-transform: scale(1, 1);
-    transform: scale(1, 1);
   }
 }
 
-@-webkit-keyframes fade-in-bounce-in {
+@-webkit-keyframes fade-in {
   /* line 99, style.scss */
   0% {
     opacity: 0;
-    -webkit-transform: scale(0.95, 0.95);
-    transform: scale(0.95, 0.95);
   }
 
-  /* line 102, style.scss */
+  /* line 100, style.scss */
   100% {
     opacity: 1;
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
   }
 }
 
-@-o-keyframes fade-in-bounce-in {
+@-o-keyframes fade-in {
   /* line 99, style.scss */
   0% {
     opacity: 0;
-    -o-transform: scale(0.95, 0.95);
-    transform: scale(0.95, 0.95);
   }
 
-  /* line 102, style.scss */
+  /* line 100, style.scss */
   100% {
     opacity: 1;
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1);
   }
 }
 
-@keyframes fade-in-bounce-in {
+@keyframes fade-in {
   /* line 99, style.scss */
   0% {
     opacity: 0;
-    transform: scale(0.95, 0.95);
   }
 
-  /* line 102, style.scss */
+  /* line 100, style.scss */
   100% {
     opacity: 1;
-    transform: scale(1, 1);
   }
 }
