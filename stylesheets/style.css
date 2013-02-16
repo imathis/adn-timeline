@@ -1,70 +1,110 @@
+/* line 5, style.scss */
 html {
-  background: #f0f0f0;
-  color: #444; }
-  html a {
-    color: #418afa;
-    text-decoration: none; }
-    html a:hover {
-      color: #418afa; }
+  background: #eaeaea;
+  color: #444;
+}
 
+/* line 10, style.scss */
 body {
   max-width: 500px;
   margin: 0 auto;
   padding: 0 0.5em 1em;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
+/* line 16, style.scss */
+a {
+  color: #418afa;
+  text-decoration: none;
+}
+/* line 19, style.scss */
+a:hover {
+  color: #418afa;
+}
+
+/* line 24, style.scss */
 form {
   padding: 0.8em 0.8em 0.2em;
   background: #f5f5f5;
-  border: 1px solid rgba(0, 0, 0, 0.08); }
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
 
+/* line 29, style.scss */
 form span {
-  white-space: nowrap; }
+  white-space: nowrap;
+}
 
+/* line 30, style.scss */
 input[name=count] {
-  width: 4em; }
+  width: 4em;
+}
 
+/* line 31, style.scss */
 input[name=username] {
-  width: 15em; }
+  width: 15em;
+}
 
+/* line 32, style.scss */
 input[type=checkbox] {
   position: relative;
   top: -.2em;
   margin: 0;
   padding-right: .2em;
-  margin-bottom: .8em; }
+  margin-bottom: .8em;
+}
 
+/* line 38, style.scss */
 input[type=text] {
   margin-right: .2em;
   margin-bottom: .8em;
   padding: .3em;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 15px; }
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 15px;
+}
 
+/* line 45, style.scss */
 label {
   margin-right: .2em;
-  padding-left: .1em; }
+  padding-left: .1em;
+}
 
+/* line 50, style.scss */
 h1 {
   text-align: center;
-  padding: 0.4em 0; }
-  h1 a {
-    text-decoration: none; }
+  padding: 0.4em 0;
+}
+/* line 53, style.scss */
+h1 a {
+  text-decoration: none;
+}
 
+/* line 56, style.scss */
 .adn-timeline ul {
+  -webkit-animation: fade-in-bounce-in 0.4s;
+  -moz-animation: fade-in-bounce-in 0.4s;
+  -o-animation: fade-in-bounce-in 0.4s;
+  animation: fade-in-bounce-in 0.4s;
   padding-left: 0;
-  list-style: none; }
+  list-style: none;
+}
+/* line 62, style.scss */
 .adn-timeline li {
   background: #f5f5f5;
   border: 1px solid rgba(0, 0, 0, 0.08);
   margin-bottom: .4em;
-  padding: 1em 1em; }
+  padding: 1em 1em;
+}
+/* line 69, style.scss */
 .adn-timeline figure {
   position: relative;
   padding-right: 1.5em;
-  word-wrap: break-word; }
+  word-wrap: break-word;
+}
+/* line 75, style.scss */
 .adn-timeline figure, .adn-timeline blockquote, .adn-timeline p {
-  margin: 0; }
+  margin: 0;
+}
+/* line 77, style.scss */
 .adn-timeline .adn-post-url {
   position: absolute;
   top: 0;
@@ -72,15 +112,86 @@ h1 {
   text-decoration: none;
   font-size: .8em;
   color: #999;
-  z-index: 1; }
-  .adn-timeline .adn-post-url:hover {
-    color: #418afa; }
+  z-index: 1;
+}
+/* line 84, style.scss */
+.adn-timeline .adn-post-url:hover {
+  color: #418afa;
+}
 
+/* line 88, style.scss */
 footer {
   padding: 1em 0;
-  text-align: center; }
-  footer a {
-    color: #aaa;
-    text-decoration: underline; }
-    footer a:hover {
-      color: #418afa; }
+  text-align: center;
+}
+/* line 91, style.scss */
+footer a {
+  color: #aaa;
+  text-decoration: underline;
+}
+/* line 94, style.scss */
+footer a:hover {
+  color: #418afa;
+}
+
+@-moz-keyframes fade-in-bounce-in {
+  /* line 99, style.scss */
+  0% {
+    opacity: 0;
+    -moz-transform: scale(0.95, 0.95);
+    transform: scale(0.95, 0.95);
+  }
+
+  /* line 102, style.scss */
+  100% {
+    opacity: 1;
+    -moz-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@-webkit-keyframes fade-in-bounce-in {
+  /* line 99, style.scss */
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.95, 0.95);
+    transform: scale(0.95, 0.95);
+  }
+
+  /* line 102, style.scss */
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@-o-keyframes fade-in-bounce-in {
+  /* line 99, style.scss */
+  0% {
+    opacity: 0;
+    -o-transform: scale(0.95, 0.95);
+    transform: scale(0.95, 0.95);
+  }
+
+  /* line 102, style.scss */
+  100% {
+    opacity: 1;
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes fade-in-bounce-in {
+  /* line 99, style.scss */
+  0% {
+    opacity: 0;
+    transform: scale(0.95, 0.95);
+  }
+
+  /* line 102, style.scss */
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}

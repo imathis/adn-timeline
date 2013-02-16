@@ -1,30 +1,35 @@
+@import 'compass';
+
 $link-color: #418afa;
+
 html {
-  background: #f0f0f0;
+  background: #eaeaea;
   color: #444;
-  a {
-    color: #418afa;
-    text-decoration: none;
-    &:hover { 
-      color: $link-color;
-    }
-  }
 }
+
 body {
   max-width: 500px; margin: 0 auto;
   padding: 0 .5em 1em;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+a {
+  color: #418afa;
+  text-decoration: none;
+  &:hover {
+    color: $link-color;
+  }
+}
+
 form {
   padding: .8em .8em .2em;
   background: #f5f5f5;
-  border: 1px solid rgba(#000, .08);
+  border: 1px solid rgba(#000, .12);
 }
 form span { white-space: nowrap; }
 input[name=count] { width: 4em; }
 input[name=username] { width: 15em; }
-input[type=checkbox] { 
+input[type=checkbox] {
   position: relative; top: -.2em;
   margin: 0;
   padding-right: .2em;
@@ -34,7 +39,7 @@ input[type=text] {
   margin-right: .2em;
   margin-bottom: .8em;
   padding: .3em;
-  border: 1px solid rgba(#000, .1);
+  border: 1px solid rgba(#000, .15);
   font-size: 15px;
 }
 label {
@@ -48,8 +53,8 @@ h1 {
   a { text-decoration: none; }
 }
 .adn-timeline {
-
   ul {
+    @include animation(fade-in-bounce-in .4s);
     padding-left: 0;
     list-style: none;
   }
@@ -89,3 +94,13 @@ footer {
     &:hover { color: $link-color; }
   }
 }
+
+@include keyframes(fade-in-bounce-in) {
+  0% {
+    opacity: 0;
+    @include scale(.95) }
+  100% {
+    opacity: 1;
+    @include scale(1) }
+}
+
