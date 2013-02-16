@@ -2,7 +2,7 @@
 
 Display recent posts for one or more App.net accounts. The coffeescript source is pretty well documented if you're curious.
 
-[View the demo](http://imathis.github.com/adn-timeline).
+[View the demo](http://imathis.github.com/adn-timeline) | [get the js](https://raw.github.com/imathis/adn-timeline/master/javascripts/adn-timeline.min.js).
 
 ## Dependencies
 
