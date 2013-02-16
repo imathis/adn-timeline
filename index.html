@@ -32,7 +32,7 @@
           options = parseInputs($('.configuration').serialize())
           options.render = function(el, data) {
             el.html('')
-            $('.user-link').html('@'+options.username).attr('href', 'https://alpha-app.net/'+options.username)
+            $('.user-link').html('@'+options.username).attr('href', 'http://alpha.app.net/'+options.username)
             AdnTimeline.render(el, data)
           }
           AdnTimeline.init(options)
