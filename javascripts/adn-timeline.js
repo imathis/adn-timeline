@@ -28,22 +28,19 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
       for (_i = 0, _len = optionsArray.length; _i < _len; _i++) {
         options = optionsArray[_i];
         $(options.el || this.defaults.el).each(function(i, el) {
-          var callback, renderer, user;
+          var callback, renderer;
           el = $(el);
-          user = _this.cascadeOptions(el.attr('data-username'), options.username);
-          if (user == null) {
-            return console.error('You need to provide an App.net username');
-          }
           renderer = options.render || _this.render;
           callback = options.callback || (function() {});
-          return _this.timeline(_this.helpers).fetch(renderer, callback, {
-            el: el,
-            user: user,
-            count: _this.cascadeOptions(parseInt(el.attr('data-count')), options.count, _this.defaults.count),
-            replies: _this.cascadeOptions(_this.parseBool(el.attr('data-replies')), options.replies, _this.defaults.replies),
-            reposts: _this.cascadeOptions(_this.parseBool(el.attr('data-reposts')), options.reposts, _this.defaults.reposts),
-            cookie: _this.cascadeOptions(_this.parseBool(el.attr('data-cookie')), options.cookie)
-          }, "" + _this.defaults.cookie + "-" + user);
+          options = $.extend({}, _this.defaults, options, el.data());
+          options.el = el;
+          if (options.username == null) {
+            return console.error('You need to provide an App.net username');
+          }
+          if (options.cookie === _this.defaults.cookie) {
+            options.cookie = options.cookie + ("-" + options.username);
+          }
+          return _this.timeline(_this.helpers).fetch(renderer, callback, options);
         });
       }
       return this;
@@ -57,18 +54,6 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
           return option;
           break;
         }
-      }
-    },
-    parseBool: function(str) {
-      if (str != null) {
-        str = str.trim();
-        if (str.match(/^true$/i)) {
-          return true;
-        }
-        if (str.match(/^false/i)) {
-          return false;
-        }
-        return console.error("\"" + str + "\" cannot be parsed as Boolean");
       }
     },
     render: function(el, posts) {
@@ -104,7 +89,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
               return callback(data);
             }
           } else {
-            url = "https://alpha-api.app.net/stream/0/users/@" + options.user + "/posts?include_deleted=0";
+            url = "https://alpha-api.app.net/stream/0/users/@" + options.username + "/posts?include_deleted=0";
             if (options.before_id) {
               url += "&before_id=" + options.before_id;
             }

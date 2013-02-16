@@ -11,52 +11,54 @@
     <script type="text/javascript" src="./javascripts/adn-timeline.js"></script>
     <link href='./stylesheets/style.css' media="screen" rel="stylesheet" type="text/css">
     <script type="text/javascript">
-      parseInputs = function(str) {
-        options = str.split('&').
-          map(function(s) { return s.split("=") }).
-          reduce(function(p, s) { return p[s[0]] = s[1], p }, {})
-        if (options.username === "") { alert('Please enter a username') }
-        if (options.count === '') {
-          delete options.count
-        } else {
-          options.count = parseInt(options.count)
-          if (options.count != options.count) alert('count must be a number') 
+      (function(){ 
+         parseVal = function(str) {
+          str = str.trim()
+          if (str.match(/^true$/i))  return true
+          if (str.match(/^false$/i)) return false
+          if (str.match(/^\d+$/))    return parseFloat(str)
+          return str
         }
-        if (options.replies != null) options.replies = AdnTimeline.parseBool(options.replies)
-        if (options.reposts != null) options.reposts = AdnTimeline.parseBool(options.reposts)
-        return options
-      }
 
-      fetchTimeline = function() {
-        options = parseInputs($('.configuration').serialize())
-        options.render = function(el, data) {
-          el.html('')
-          $('.user-link').html('@'+options.username).attr('href', 'https://alpha-app.net/'+options.username)
-          AdnTimeline.render(el, data);
+        parseInputs = function(str) {
+          options = str.split('&').
+            map(function(s) { return s.split("=") }).
+            reduce(function(p, s) { return p[s[0]] = parseVal(s[1]), p }, {})
+          if (isNaN(options.count)) return alert('count must be a number') 
+          return options
         }
-        AdnTimeline.init(options)
-      }
 
-      $(document).ready(function(){
-        fetchTimeline();
+        fetchTimeline = function() {
+          options = parseInputs($('.configuration').serialize())
+          options.render = function(el, data) {
+            el.html('')
+            $('.user-link').html('@'+options.username).attr('href', 'https://alpha-app.net/'+options.username)
+            AdnTimeline.render(el, data)
+          }
+          AdnTimeline.init(options)
+        }
 
-        $('input[type=checkbox]').on('change', function(e){
+        $(document).ready(function(){
           fetchTimeline();
-          e.preventDefault();
-        });
-        $('form').on('keypress', function(e){
-          if (e.which == 13) {
+
+          $('input[type=checkbox]').on('change', function(e){
             fetchTimeline();
             e.preventDefault();
-          }
-        });
-      })
+          });
+          $('form').on('keypress', function(e){
+            if (e.which == 13) {
+              fetchTimeline();
+              e.preventDefault();
+            }
+          });
+        })
+      })(this)
     </script>
   </head>
   <body>    <form class='configuration'>
     <form class='configuration'>
       <input type=text name=username placeholder=username value=imathis>
-      <input type=text name=count placeholder=count value=4>
+      <input type=text name=count placeholder=count value=5>
       <span>
         <input id=replies type=checkbox name=replies value=true> <label for=replies>replies</label>
         <input id=reposts type=checkbox name=reposts value=true> <label for=reposts>reposts</label>
