@@ -24,17 +24,14 @@ AdnTimeline =
       # Options are loaded in order of element data-attributes, passed options, and finally defaults.
       $(options.el or @defaults.el).each (i, el) =>
         el = $(el)
-        user =  @cascadeOptions el.attr('data-username'), options.username
-        return console.error 'You need to provide an App.net username' unless user?
         renderer = options.render or @render
         callback = options.callback or (->)
-        @timeline(@helpers).fetch renderer, callback,
-          el:      el
-          user:    user
-          count:   @cascadeOptions parseInt(el.attr('data-count')),     options.count,   @defaults.count
-          replies: @cascadeOptions @parseBool(el.attr('data-replies')), options.replies, @defaults.replies
-          reposts: @cascadeOptions @parseBool(el.attr('data-reposts')), options.reposts, @defaults.reposts
-          cookie:  @cascadeOptions @parseBool(el.attr('data-cookie')),  options.cookie,  "#{@defaults.cookie}-#{user}" 
+        options = $.extend({}, @defaults, options, el.data())
+        options.el = el
+        return console.error 'You need to provide an App.net username' unless options.username?
+        options.cookie = options.cookie + "-#{options.username}" if options.cookie is @defaults.cookie
+
+        @timeline(@helpers).fetch renderer, callback, options
     @
 
   # Walk through a series of options, returning the first option which is not undefined or NaN.
@@ -43,14 +40,6 @@ AdnTimeline =
     for option in options
       if option? and option is option
         return option; break
-
-  # Convert strings like "true" and " false " to proper Booleans.
-  parseBool: (str)->
-    if str?
-      str = str.trim()
-      return true if str.match /^true$/i
-      return false if str.match /^false/i
-      return console.error "\"#{str}\" cannot be parsed as Boolean"
 
   # Convert posts to HTML and render them in target element.
   render: (el, posts) ->
@@ -85,7 +74,7 @@ AdnTimeline =
           renderer options.el, data
           callback data
       else
-        url =  "https://alpha-api.app.net/stream/0/users/@#{options.user}/posts?include_deleted=0"
+        url =  "https://alpha-api.app.net/stream/0/users/@#{options.username}/posts?include_deleted=0"
         # before_id allows us to page through posts if the first fetch didn't yeild enough posts.
         url += "&before_id=#{options.before_id}" if options.before_id
         url += "&include_directed_posts=0" unless options.replies
