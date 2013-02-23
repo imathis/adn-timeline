@@ -1,6 +1,6 @@
 ## App.net Timeline
 
-Display recent posts for one or more App.net accounts. The coffeescript source is pretty well documented if you're curious.
+Display recent posts for one or more App.net user accounts or hashtags. The coffeescript source is pretty well documented if you're curious.
 
 [View the demo](http://imathis.github.com/adn-timeline) | [get the js](https://raw.github.com/imathis/adn-timeline/master/javascripts/adn-timeline.min.js).
 
@@ -29,7 +29,14 @@ $(document).ready(function(){
 
 Somehwere on your page, add a block-level element (probably a `div` or a `section`) with a class `adn-timeline` and add your username a `data-username` attribute.
 
-    <div class='adn-timeline' data-username='imathis'></div>
+```
+<div class='adn-timeline' data-username='imathis'></div>
+```
+
+To add a timeline for a hashtag do this.
+```
+<div class='adn-timeline' data-hashtag='adn'></div>
+```
 
 #### Want more than one account?
 
@@ -58,7 +65,10 @@ The heading will remain and posts will be added below in a `<ul>`.
 | Config     | Default                 | Description
 |:-----------|:------------------------|:----------------------------------------------|
 | `el`       | '.adn-timeline'         | A jQuery selector (handles multiple elements) |
+| `username` | undefined               | Show posts for a specific App.net username    |
+| `hashtag`  | undefined               | Show posts from a hashtag on App.net          |
 | `count`    | 4                       | How many posts to show from your timeline     |
+| `avatars`  | false                   | Show avatars in post template                 |
 | `replies`  | false                   | Include reply posts                           |
 | `reposts`  | false                   | Include reposts                               |
 | `cookie`   | 'adn-timeline-username' | Choose a different name for the cookie        |
@@ -87,6 +97,7 @@ $(document).ready(function(){
     , count:   5
     , replies: true
     , reposts: false
+    , avatars: true
     , cookie:  'delicious-cookie'
     , callback: function (data) { console.log(data) }
     , renderer: function (el, data) { /* rendering code here */ }
@@ -148,26 +159,46 @@ attributes, but in some cases it might be helpful to configure things more dynam
 
 ## HTML Rendering
 
-The default render function appends the following HTML template to the target element(s).
+For a user timeline the default render function appends the following HTML template to the target element(s).
 
 ```
 <ul>
   <li>
     <figure class="post">
-      <blockquote>
-        <p>Post Text</p>
-      </blockquote>
       <figcaption>
         <a href='http://alpha.app.net/username/post/id'>
           <time datetime="2013-02-14T05:03:14Z">2h</time>
         </a>
       </figcaption>
+      <blockquote>
+        <p>Post Text</p>
+      </blockquote>
     </figure>
   </li>
   ...
 </ul>
 ```
 
+For a repost inside of a user's timeline, the original author information is included in the `figcaption` like this.
+
+```
+<figcaption>
+<p>
+  <span class="adn-repost-marker">>> </span>
+  <a href="https://alpha.app.net/username" class="adn-author-url" rel="author">
+    <strong class="adn-author-name">User Name</strong>
+    <span class="adn-author-username">@username</span>
+  </a>
+</p>
+<a href='http://alpha.app.net/username/post/id'>
+  <time datetime="2013-02-14T05:03:14Z">2h</time>
+</a>
+</figcaption>
+```
+
+When fetching a hashtag timeline, each author's information is included in the `figcaption` like above, but the repost marker `>>` is omitted.
+
+#### Why this HTML?
 
 While this may seem somewhat verbose, I believe it is a semantically appropriate way to display a timeline feed. After all they are a series of quotes with timestamped meta data linking to the source.
 If you haven't seen a figure used to group a `blockquote` with metadata, take a look at the [blockquote spec](http://www.whatwg.org/specs/web-apps/current-work/multipage/grouping-content.html#the-blockquote-element) where you'll find an exmaple just like what I've done.
@@ -177,25 +208,30 @@ like this. This would mean they would have to change their site designs to be le
 
 ## Using a custom render function
 
-It's fairly easy add a custom render function. The function will receive an jQuery wrapped element and a array of post data hashes with the following format:
+It's fairly easy add a custom render function. The function will receive the options array (including the jQuery wrapped element at options.el) and a array of post data hashes with the following format:
 
 ```
 author: {
   username:   post.user.username,
   name:       post.user.name,
   url:        post.user.canonical_url
+  unique:     false (true if user is a repost or in a hashtag timeline)
+  avatar:     post.user.avatar_image.url
 }
 url:          post.canonical_url
 date:         post.created_at
 display_date: post.created_at (converted to relative time)
 text:         post.html (with trimmed display urls and auto-linked mentions and hashtags)
+repost:       true or false based on the post.repost_of
 ```
+
+### Custom render function
 
 To write a custom render function we can simply pass it as an option in the options hash. Adding a custom render function could be as simple as this.
 
 ```
 AdnTimeline.init({
-  render: (function(el, posts) {
+  render: (function(options, posts) {
     var html, i, len
     html  = "<ul>"
     for (i = 0, len = posts.length; i < len; i++) {
@@ -204,7 +240,7 @@ AdnTimeline.init({
       html += "</li>"
     }
     html += "</ul>"
-    el.append(html)
+    options.el.append(html)
   })
 })
 ```

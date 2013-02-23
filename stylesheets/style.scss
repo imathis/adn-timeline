@@ -27,7 +27,7 @@ form {
   border: 1px solid rgba(#000, .12);
 }
 form span { white-space: nowrap; }
-input[name=count] { width: 4em; }
+input[name=count] { width: 3em; }
 input[name=username] { width: 15em; }
 input[type=checkbox] {
   position: relative; top: -.2em;
@@ -45,6 +45,14 @@ input[type=text] {
 label {
   margin-right: .2em;
   padding-left: .1em;
+}
+
+pre {
+  background: rgba(#000, .05);
+  @include border-radius(.3em);
+  @include box-shadow(rgba(#000, .2) 0 1px 3px inset, rgba(#fff, .5) 0 1px);
+  padding: .5em .8em;
+  white-space: pre-wrap;
 }
 
 h1 {
@@ -70,27 +78,35 @@ h1 {
     position: relative;
     padding-right: 1.5em;
     word-wrap: break-word;
+    @include pie-clearfix;
   }
 
-  figure, blockquote, p { margin: 0; }
+  p { margin: 0; }
+  figure, blockquote { margin: 0; }
+  figcaption p { margin-bottom: .5em; }
 
+  .adn-author-avatar {
+    float: left;
+    @include border-radius(.2em);
+    margin: 0;
+    @include box-shadow(rgba(#000, .3) 0 1px 1px);
+
+    ~ blockquote, ~ figcaption {
+      margin-left: 60px;
+    }
+  }
+  .adn-author-url {
+    color: inherit;
+    &:hover { color: $link-color; }
+  }
+  .adn-author-name { font-weight: bold; }
   .adn-post-url {
     position: absolute;
-    top: 0; right: 0;
+    top: .2em; right: 0;
     text-decoration: none;
     font-size: .8em;
     color: #999;
     z-index: 1;
-    &:hover { color: $link-color; }
-  }
-}
-
-footer {
-  padding: 1em 0;
-  text-align: center;
-  a {
-    color: #aaa;
-    text-decoration: underline;
     &:hover { color: $link-color; }
   }
 }
