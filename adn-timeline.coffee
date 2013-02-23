@@ -1,5 +1,7 @@
 ###!
 App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
+Version: 1.1
+Source: https://github.com/imathis/adn-timeline/
 ###
 
 
@@ -10,6 +12,7 @@ AdnTimeline =
     replies: false
     reposts: false
     cookie: 'adn-timeline'
+    avatars: false
 
   # A page can render multiple timelines
   # Options can be passed as simple hash, but an array allows multiple timelines to be configured independantly
@@ -28,8 +31,10 @@ AdnTimeline =
         callback = options.callback or (->)
         options = $.extend({}, @defaults, options, el.data())
         options.el = el
-        return console.error 'You need to provide an App.net username' unless options.username?
-        options.cookie = options.cookie + "-#{options.username}" if options.cookie is @defaults.cookie
+        options.username = options.username?.replace '@', ''
+        options.hashtag = options.hashtag?.replace '#', ''
+        return console.error 'You need to provide an App.net username or hashtag' unless options.username? or options.hashtag?
+        options.cookie = options.cookie + "-#{options.username or options.hashtag}" if options.cookie is @defaults.cookie
 
         @timeline(@helpers).fetch renderer, callback, options
     @
@@ -42,16 +47,24 @@ AdnTimeline =
         return option; break
 
   # Convert posts to HTML and render them in target element.
-  render: (el, posts) ->
-    text  = "<ul id='adn-timeline-imathis'>"
+  render: (options, posts) ->
+    el = options.el
+    text  = "<ul id='adn-timeline-#{options.username or options.hashtag}'>"
     for post in posts
       text += "<li><figure class='post'>"
+      text += "<img alt='@#{post.author.username}'s avatar on App.net' class='adn-author-avatar' width=48 src='#{post.author.avatar}'>" if post.author.avatar
+      text += "<figcaption>"
+      if post.author.unique
+        text += "<p>"
+        text += "<span class='adn-repost-marker'>>></span> " if post.repost
+        text += "<a href='#{post.author.url}' class='adn-author-url' rel=author>"
+        text += "<strong class='adn-author-name'>#{post.author.name}</strong> <span class='adn-author-username'>@#{post.author.username}</span>"
+        text += "</a></p>"
+      text += "<a href='#{post.url}' class='adn-post-url'><time datetime='#{post.date}'>#{post.display_date}</time></a>"
+      text += "</figcaption>"
       text += "<blockquote><p>"
       text += post.text
       text += "</p></blockquote>"
-      text += "<figcaption>"
-      text += "<a href='#{post.url}' class='adn-post-url'><time datetime='#{post.date}'>#{post.display_date}</time></a>"
-      text += "</figcaption>"
       text += "</figure></li>"
     text += "</ul>"
     el.append text
@@ -71,10 +84,12 @@ AdnTimeline =
           $.removeCookie options.cookie
           @fetch renderer, callback, options
         else 
-          renderer options.el, data
+          renderer options, data
           callback data
       else
-        url =  "https://alpha-api.app.net/stream/0/users/@#{options.username}/posts?include_deleted=0"
+        url =  "https://alpha-api.app.net/stream/0/"
+        url += "users/@#{options.username}/posts?include_deleted=0" if options.username
+        url += "posts/tag/#{options.hashtag}?include_deleted=0" if options.hashtag
         # before_id allows us to page through posts if the first fetch didn't yeild enough posts.
         url += "&before_id=#{options.before_id}" if options.before_id
         url += "&include_directed_posts=0" unless options.replies
@@ -104,10 +119,10 @@ AdnTimeline =
 
             else 
               # Now that we have enough posts, let's condense the data and store a cookie if possible.
-              @data = (helpers.postData post for post in @data.slice(0, options.count))
+              @data = (helpers.postData post, options for post in @data.slice(0, options.count))
               $.cookie(options.cookie, JSON.stringify @data, { path: '/' }) if $.cookie and options.cookie
 
-              renderer options.el, @data
+              renderer options, @data
               callback @data
   
   # Post parsing helpers are scoped for easier internal referencing when passed into timeline
@@ -148,12 +163,16 @@ AdnTimeline =
       text = text.replace "##{hashtag.name}", "<a href='https://alpha.app.net/hashtags/#{hashtag.name}'>##{hashtag.name}</a>" for hashtag in post.entities.hashtags
       text
 
-    postData: (post) ->
+    postData: (post, options) ->
+      repost = !!(post.repost_of)
+      post = post.repost_of if repost
+      avatar = post.user.avatar_image.url if options.avatars
       {
+        repost: repost
         url: post.canonical_url
         date: post.created_at
         display_date: @timeago post.created_at
-        author: { username: post.user.username, name: post.user.name, url: post.user.canonical_url }
+        author: { username: post.user.username, name: post.user.name, url: post.user.canonical_url, avatar: avatar, unique: !!(repost or options.hashtag) }
         text: @linkify post
       }
 

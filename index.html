@@ -21,20 +21,50 @@
         }
 
         parseInputs = function(str) {
+          // Convert urlencoded form data to options hash
+          str = $('.configuration').serialize()
           options = str.split('&').
             map(function(s) { return s.split("=") }).
             reduce(function(p, s) { return p[s[0]] = parseVal(s[1]), p }, {})
           if (isNaN(options.count)) return alert('count must be a number') 
+
+          // Parse text input to set hashtag or username
+          options.name = decodeURIComponent(options.name)
+          if (options.name.match(/#/)) options.hashtag = options.name.replace('#', '')
+          else options.username = options.name.replace('@','')
+          delete options.name
+
           return options
         }
 
-        fetchTimeline = function() {
-          options = parseInputs($('.configuration').serialize())
-          options.render = function(el, data) {
-            el.html('')
-            $('.user-link').html('@'+options.username).attr('href', 'http://alpha.app.net/'+options.username)
-            AdnTimeline.render(el, data)
+        getDemoDiv = function (options) {
+          div = $('<div>')
+          for (var key in options) {
+            if (options.hasOwnProperty(key)) {
+              div.attr('data-'+key, options[key]);
+            }
           }
+          return $('<div>').append(div).html()
+        }
+
+        fetchTimeline = function() {
+          var titleLink = $('<a>')
+            options = parseInputs(),
+            demoDiv = getDemoDiv(options)
+
+          options.render = function(opts, data) {
+            opts.el.html('')
+            if (opts.hashtag) titleLink.attr('href', 'https://alpha.app.net/hashtags/'+opts.hashtag).html('#'+opts.hashtag)
+            else titleLink.attr('href', 'https://alpha.app.net/'+opts.username).html('@'+opts.username)
+            $('#title').html('').append([titleLink, " on App.net"])
+            AdnTimeline.render(opts, data)
+          }
+          options.callback = function(){
+            text  = "<script type=\"text/javascript\">\n  $(document).ready(function(){\n    AdnTimeline.init();\n  });\n<\/script>\n\n"
+            text += demoDiv
+            $('.live-docs').text(text)
+          }
+
           AdnTimeline.init(options)
         }
 
@@ -57,16 +87,18 @@
   </head>
   <body>    <form class='configuration'>
     <form class='configuration'>
-      <input type=text name=username placeholder=username value=imathis>
+      <input type=text name=name placeholder="@user or #hashtag" value=@imathis>
       <input type=text name=count placeholder=count value=5>
-      <span>
-        <input id=replies type=checkbox name=replies value=true> <label for=replies>replies</label>
-        <input id=reposts type=checkbox name=reposts value=true> <label for=reposts>reposts</label>
-      </span>
+      <span><input id=avatars type=checkbox name=avatars value=true checked=checked> <label for=avatars>avatars</label></span>
+      <span><input id=replies type=checkbox name=replies value=true> <label for=replies>replies</label></span>
+      <span><input id=reposts type=checkbox name=reposts value=true> <label for=reposts>reposts</label></span>
     </form>
-    <h1><a href="https://alpha.app.net/imathis" class='user-link'>@imathis</a> on App.net</h1>
+    <h1 id="title"></h1>
     <div class='adn-timeline'></div>
-    <footer><a href="https://github.com/imathis/adn-timeline/">Get the hookups</a></footer>
+    <h2>Live Docs</h2>
+    <p>Using ADN-Timeline is simple.</p>
+    <pre class='live-docs'></pre>
+    <p>There's a lot more. Check out the <a href="https://github.com/imathis/adn-timeline/">documentation</a> or <a href="https://raw.github.com/imathis/adn-timeline/master/javascripts/adn-timeline.min.js">get the script</a>.
   </body>
 </html>
 

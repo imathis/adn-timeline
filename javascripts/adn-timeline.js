@@ -1,6 +1,8 @@
 
 /*!
 App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
+Version: 1.1
+Source: https://github.com/imathis/adn-timeline/
 */
 
 
@@ -14,7 +16,8 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
       count: 4,
       replies: false,
       reposts: false,
-      cookie: 'adn-timeline'
+      cookie: 'adn-timeline',
+      avatars: false
     },
     init: function(optionsArray) {
       var options, _i, _len,
@@ -28,17 +31,19 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
       for (_i = 0, _len = optionsArray.length; _i < _len; _i++) {
         options = optionsArray[_i];
         $(options.el || this.defaults.el).each(function(i, el) {
-          var callback, renderer;
+          var callback, renderer, _ref, _ref1;
           el = $(el);
           renderer = options.render || _this.render;
           callback = options.callback || (function() {});
           options = $.extend({}, _this.defaults, options, el.data());
           options.el = el;
-          if (options.username == null) {
-            return console.error('You need to provide an App.net username');
+          options.username = (_ref = options.username) != null ? _ref.replace('@', '') : void 0;
+          options.hashtag = (_ref1 = options.hashtag) != null ? _ref1.replace('#', '') : void 0;
+          if (!((options.username != null) || (options.hashtag != null))) {
+            return console.error('You need to provide an App.net username or hashtag');
           }
           if (options.cookie === _this.defaults.cookie) {
-            options.cookie = options.cookie + ("-" + options.username);
+            options.cookie = options.cookie + ("-" + (options.username || options.hashtag));
           }
           return _this.timeline(_this.helpers).fetch(renderer, callback, options);
         });
@@ -56,18 +61,31 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
         }
       }
     },
-    render: function(el, posts) {
-      var post, text, _i, _len;
-      text = "<ul id='adn-timeline-imathis'>";
+    render: function(options, posts) {
+      var el, post, text, _i, _len;
+      el = options.el;
+      text = "<ul id='adn-timeline-" + (options.username || options.hashtag) + "'>";
       for (_i = 0, _len = posts.length; _i < _len; _i++) {
         post = posts[_i];
         text += "<li><figure class='post'>";
+        if (post.author.avatar) {
+          text += "<img alt='@" + post.author.username + "'s avatar on App.net' class='adn-author-avatar' width=48 src='" + post.author.avatar + "'>";
+        }
+        text += "<figcaption>";
+        if (post.author.unique) {
+          text += "<p>";
+          if (post.repost) {
+            text += "<span class='adn-repost-marker'>>></span> ";
+          }
+          text += "<a href='" + post.author.url + "' class='adn-author-url' rel=author>";
+          text += "<span class='adn-author-name'>" + post.author.name + "</span> <span class='adn-author-username'>@" + post.author.username + "</span>";
+          text += "</a></p>";
+        }
+        text += "<a href='" + post.url + "' class='adn-post-url'><time datetime='" + post.date + "'>" + post.display_date + "</time></a>";
+        text += "</figcaption>";
         text += "<blockquote><p>";
         text += post.text;
         text += "</p></blockquote>";
-        text += "<figcaption>";
-        text += "<a href='" + post.url + "' class='adn-post-url'><time datetime='" + post.date + "'>" + post.display_date + "</time></a>";
-        text += "</figcaption>";
         text += "</figure></li>";
       }
       text += "</ul>";
@@ -85,11 +103,17 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
               $.removeCookie(options.cookie);
               return this.fetch(renderer, callback, options);
             } else {
-              renderer(options.el, data);
+              renderer(options, data);
               return callback(data);
             }
           } else {
-            url = "https://alpha-api.app.net/stream/0/users/@" + options.username + "/posts?include_deleted=0";
+            url = "https://alpha-api.app.net/stream/0/";
+            if (options.username) {
+              url += "users/@" + options.username + "/posts?include_deleted=0";
+            }
+            if (options.hashtag) {
+              url += "posts/tag/" + options.hashtag + "?include_deleted=0";
+            }
             if (options.before_id) {
               url += "&before_id=" + options.before_id;
             }
@@ -128,7 +152,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
                     _results = [];
                     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
                       post = _ref1[_j];
-                      _results.push(helpers.postData(post));
+                      _results.push(helpers.postData(post, options));
                     }
                     return _results;
                   }).call(_this);
@@ -137,7 +161,7 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
                       path: '/'
                     }));
                   }
-                  renderer(options.el, _this.data);
+                  renderer(options, _this.data);
                   return callback(_this.data);
                 }
               }
@@ -191,15 +215,26 @@ App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
         }
         return text;
       },
-      postData: function(post) {
+      postData: function(post, options) {
+        var avatar, repost;
+        repost = !!post.repost_of;
+        if (repost) {
+          post = post.repost_of;
+        }
+        if (options.avatars) {
+          avatar = post.user.avatar_image.url;
+        }
         return {
+          repost: repost,
           url: post.canonical_url,
           date: post.created_at,
           display_date: this.timeago(post.created_at),
           author: {
             username: post.user.username,
             name: post.user.name,
-            url: post.user.canonical_url
+            url: post.user.canonical_url,
+            avatar: avatar,
+            unique: !!(repost || options.hashtag)
           },
           text: this.linkify(post)
         };

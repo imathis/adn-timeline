@@ -36,7 +36,7 @@ form span {
 
 /* line 30, style.scss */
 input[name=count] {
-  width: 4em;
+  width: 3em;
 }
 
 /* line 31, style.scss */
@@ -69,16 +69,29 @@ label {
 }
 
 /* line 50, style.scss */
+pre {
+  background: rgba(0, 0, 0, 0.05);
+  -webkit-border-radius: 0.3em;
+  -moz-border-radius: 0.3em;
+  border-radius: 0.3em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px inset, rgba(255, 255, 255, 0.5) 0 1px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px inset, rgba(255, 255, 255, 0.5) 0 1px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px inset, rgba(255, 255, 255, 0.5) 0 1px;
+  padding: 0.5em 0.8em;
+  white-space: pre-wrap;
+}
+
+/* line 58, style.scss */
 h1 {
   text-align: center;
   padding: 0.4em 0;
 }
-/* line 53, style.scss */
+/* line 61, style.scss */
 h1 a {
   text-decoration: none;
 }
 
-/* line 56, style.scss */
+/* line 64, style.scss */
 .adn-timeline ul {
   -webkit-animation: fade-in 0.4s ease-out;
   -moz-animation: fade-in 0.4s ease-out;
@@ -87,96 +100,123 @@ h1 a {
   padding-left: 0;
   list-style: none;
 }
-/* line 62, style.scss */
+/* line 70, style.scss */
 .adn-timeline li {
   background: #f5f5f5;
   border: 1px solid rgba(0, 0, 0, 0.08);
   margin-bottom: .4em;
   padding: 1em 1em;
 }
-/* line 69, style.scss */
+/* line 77, style.scss */
 .adn-timeline figure {
   position: relative;
   padding-right: 1.5em;
   word-wrap: break-word;
+  *zoom: 1;
 }
-/* line 75, style.scss */
-.adn-timeline figure, .adn-timeline blockquote, .adn-timeline p {
+/* line 38, ../../../.rbenv/versions/1.9.3-p194/lib/ruby/gems/1.9.1/gems/compass-0.13.alpha.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.adn-timeline figure:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 84, style.scss */
+.adn-timeline p {
   margin: 0;
 }
-/* line 77, style.scss */
+/* line 85, style.scss */
+.adn-timeline figure, .adn-timeline blockquote {
+  margin: 0;
+}
+/* line 86, style.scss */
+.adn-timeline figcaption p {
+  margin-bottom: .5em;
+}
+/* line 88, style.scss */
+.adn-timeline .adn-author-avatar {
+  float: left;
+  -webkit-border-radius: 0.2em;
+  -moz-border-radius: 0.2em;
+  border-radius: 0.2em;
+  margin: 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+}
+/* line 94, style.scss */
+.adn-timeline .adn-author-avatar ~ blockquote, .adn-timeline .adn-author-avatar ~ figcaption {
+  margin-left: 60px;
+}
+/* line 98, style.scss */
+.adn-timeline .adn-author-url {
+  color: inherit;
+}
+/* line 100, style.scss */
+.adn-timeline .adn-author-url:hover {
+  color: #418afa;
+}
+/* line 102, style.scss */
+.adn-timeline .adn-author-name {
+  font-weight: bold;
+}
+/* line 103, style.scss */
 .adn-timeline .adn-post-url {
   position: absolute;
-  top: 0;
+  top: .2em;
   right: 0;
   text-decoration: none;
   font-size: .8em;
   color: #999;
   z-index: 1;
 }
-/* line 84, style.scss */
+/* line 110, style.scss */
 .adn-timeline .adn-post-url:hover {
   color: #418afa;
 }
 
-/* line 88, style.scss */
-footer {
-  padding: 1em 0;
-  text-align: center;
-}
-/* line 91, style.scss */
-footer a {
-  color: #aaa;
-  text-decoration: underline;
-}
-/* line 94, style.scss */
-footer a:hover {
-  color: #418afa;
-}
-
 @-moz-keyframes fade-in {
-  /* line 99, style.scss */
+  /* line 115, style.scss */
   0% {
     opacity: 0;
   }
 
-  /* line 100, style.scss */
+  /* line 116, style.scss */
   100% {
     opacity: 1;
   }
 }
 
 @-webkit-keyframes fade-in {
-  /* line 99, style.scss */
+  /* line 115, style.scss */
   0% {
     opacity: 0;
   }
 
-  /* line 100, style.scss */
+  /* line 116, style.scss */
   100% {
     opacity: 1;
   }
 }
 
 @-o-keyframes fade-in {
-  /* line 99, style.scss */
+  /* line 115, style.scss */
   0% {
     opacity: 0;
   }
 
-  /* line 100, style.scss */
+  /* line 116, style.scss */
   100% {
     opacity: 1;
   }
 }
 
 @keyframes fade-in {
-  /* line 99, style.scss */
+  /* line 115, style.scss */
   0% {
     opacity: 0;
   }
 
-  /* line 100, style.scss */
+  /* line 116, style.scss */
   100% {
     opacity: 1;
   }
