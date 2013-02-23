@@ -78,7 +78,7 @@ Source: https://github.com/imathis/adn-timeline/
             text += "<span class='adn-repost-marker'>>></span> ";
           }
           text += "<a href='" + post.author.url + "' class='adn-author-url' rel=author>";
-          text += "<span class='adn-author-name'>" + post.author.name + "</span> <span class='adn-author-username'>@" + post.author.username + "</span>";
+          text += "<strong class='adn-author-name'>" + post.author.name + "</strong> <span class='adn-author-username'>@" + post.author.username + "</span>";
           text += "</a></p>";
         }
         text += "<a href='" + post.url + "' class='adn-post-url'><time datetime='" + post.date + "'>" + post.display_date + "</time></a>";
