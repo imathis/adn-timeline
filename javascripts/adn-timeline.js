@@ -1,7 +1,7 @@
 
 /*!
 App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
-Version: 1.1.1
+Version: 1.2
 Source: https://github.com/imathis/adn-timeline/
 */
 
