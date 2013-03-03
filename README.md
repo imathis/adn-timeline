@@ -4,7 +4,7 @@ Display recent posts for one or more App.net user accounts or hashtags.
 
 [View the demo](http://imathis.github.com/adn-timeline)
 
-Get it: [JS](https://github.com/imathis/adn-timeline/blob/master/javascripts/) and [SCSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss) or [CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
+Get it: [JS](https://github.com/imathis/adn-timeline/blob/master/javascripts/) and [SCSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/_adn-timeline.scss) or [CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
 
 The [coffeescript](https://github.com/imathis/adn-timeline/blob/master/javascripts/coffeescript/adn-timeline.coffee) source is pretty well documented if you're curious.
 
@@ -70,7 +70,7 @@ The heading will remain and posts will be added below in a `<ul>`.
 
 #### Styling
 
-If you're using Sass, grab the [scss](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss), import it and include its styles.
+If you're using Sass, grab the [scss](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/_adn-timeline.scss), import it and include its styles.
 
 ```scss
 @import 'adn-timeline';
