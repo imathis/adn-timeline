@@ -80,7 +80,7 @@ If you're using Sass, grab the [scss](https://github.com/imathis/adn-timeline/bl
   @include adn-timeline-layout;
   @include adn-timeline-theme;
 }
-``
+```
 
 Otherwise you can just use [vanilla CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
 
