@@ -4,7 +4,7 @@ Display recent posts for one or more App.net user accounts or hashtags.
 
 [View the demo](http://imathis.github.com/adn-timeline)
 
-Get it: [JS](https://github.com/imathis/adn-timeline/master/blob/javascripts/) and [SCSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss) or [CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
+Get it: [JS](https://github.com/imathis/adn-timeline/blob/master/javascripts/) and [SCSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss) or [CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
 
 The [coffeescript](https://github.com/imathis/adn-timeline/blob/master/javascripts/coffeescript/adn-timeline.coffee) source is pretty well documented if you're curious.
 
