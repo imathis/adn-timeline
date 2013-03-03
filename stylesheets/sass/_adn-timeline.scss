@@ -1,0 +1,84 @@
+@import 'compass/css3';
+
+@mixin adn-timeline-theme($background: #f5f5f5, $border: rgba(#000, .08), $link-subdued: #999, $link-subdued-hover: #418afa) {
+  .adn-username {
+    font-weight: bold;
+  }
+  .adn-post-url {
+    color: $link-subdued;
+  }
+  .adn-post-url,
+  .adn-author-url {
+    &:hover {
+      color: $link-subdued-hover;
+    }
+  }
+
+  li {
+    border: 1px solid $border;
+    background: $background;
+  }
+  .adn-author-avatar {
+    @include box-shadow(rgba(#000, .3) 0 1px 1px);
+  }
+  .adn-author-username {
+    opacity: .8;
+    font-size: .9em;
+  }
+}
+@mixin adn-timeline-layout(){
+
+  a { text-decoration: none; }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: .2em;
+    padding: 1em 1em;
+  }
+
+  .adn-post {
+    position: relative;
+    padding-right: 2em;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .adn-author-avatar-link {
+    float: left;
+    margin: 0;
+    width: 48px;
+    &:hover { text-decoration: none; }
+
+    ~ blockquote, ~ figcaption {
+      margin-left: 60px;
+    }
+  }
+  .adn-author-avatar {
+    @include border-radius(5px);
+  }
+
+  figcaption p { margin-bottom: .5em; }
+
+  blockquote { margin: 0; }
+
+  p { margin: 0; }
+
+  .adn-author-url {
+    color: inherit;
+  }
+
+  .adn-author-name { font-weight: bold; }
+
+  .adn-post-url {
+    position: absolute;
+    top: .1em; right: 0;
+    text-decoration: none;
+    font-size: .9em;
+    z-index: 1;
+  }
+}

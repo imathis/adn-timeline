@@ -1,8 +1,12 @@
 ## App.net Timeline
 
-Display recent posts for one or more App.net user accounts or hashtags. The coffeescript source is pretty well documented if you're curious.
+Display recent posts for one or more App.net user accounts or hashtags. 
 
-[View the demo](http://imathis.github.com/adn-timeline) | [get the js](https://raw.github.com/imathis/adn-timeline/master/javascripts/adn-timeline.min.js).
+[View the demo](http://imathis.github.com/adn-timeline)
+
+Get it: [JS](https://github.com/imathis/adn-timeline/master/blob/javascripts/) and [SCSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss) or [CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
+
+The [coffeescript](https://github.com/imathis/adn-timeline/blob/master/javascripts/coffeescript/adn-timeline.coffee) source is pretty well documented if you're curious.
 
 ## Dependencies
 
@@ -14,10 +18,17 @@ standalone version with jXHR or something.
 
 ## Basic usage
 
-There are many ways to add a timeline.
+First include the necessary scripts.
 
-#### Add the script
-After including jQuery, jQuery.cookie (optionally) and adn-timeline.js, add a script to initialize your ADN timeline.
+```
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/lib/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/javascripts/adn-timeline.js"></script>
+```
+
+*Note: jQuery Cookie is optional.*
+
+Next, initialize your ADN timeline.
 
 ```
 $(document).ready(function(){
@@ -25,15 +36,14 @@ $(document).ready(function(){
 })
 ```
 
-#### Add an element
-
-Somehwere on your page, add a block-level element (probably a `div` or a `section`) with a class `adn-timeline` and add your username a `data-username` attribute.
+Finally, somehwere on your page, add a block-level element (probably a `div` or a `section`) with a class `adn-timeline` and add your username a `data-username` attribute.
 
 ```
 <div class='adn-timeline' data-username='imathis'></div>
 ```
 
 To add a timeline for a hashtag do this.
+
 ```
 <div class='adn-timeline' data-hashtag='adn'></div>
 ```
@@ -58,9 +68,29 @@ like this.
 
 The heading will remain and posts will be added below in a `<ul>`.
 
+#### Styling
+
+If you're using Sass, grab the [scss](https://github.com/imathis/adn-timeline/blob/master/stylesheets/sass/adn-timeline.scss), import it and include its styles.
+
+```scss
+@import 'adn-timeline';
+
+// Include the layout and theme mixins
+.adn-timeline {
+  @include adn-timeline-layout;
+  @include adn-timeline-theme;
+}
+``
+
+Otherwise you can just use [vanilla CSS](https://github.com/imathis/adn-timeline/blob/master/stylesheets/adn-timeline.css).
+
 ## Configuration options
 
+ADN Timeline is easy to configure. You can set preferences as HTML5 data attributes or through javascript.
+
 ### Defaults
+
+ADN Timeline has defautls for everything other than username or hashtag.
 
 | Config     | Default                 | Description
 |:-----------|:------------------------|:----------------------------------------------|

@@ -1,0 +1,86 @@
+// Requires Compass 0.13.alpha.2
+@import 'adn-timeline';
+
+.adn-timeline {
+  @include adn-timeline-layout;
+  @include adn-timeline-theme;
+  ul {
+    @include animation(fade-in .4s ease-out);
+  }
+  line-height: 1.3em;
+}
+
+@include keyframes(fade-in) {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+html {
+  background: #eaeaea;
+  color: #444;
+  a, a:hover { color: #418afa; }
+}
+
+body {
+  max-width: 500px; margin: 0 auto;
+  padding: 0 .2em 1em;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+form {
+  padding: .8em .8em .2em;
+  background: #f5f5f5;
+  border: 1px solid rgba(#000, .12);
+  margin-bottom: .5em;
+}
+
+.try {
+  text-align: center;
+  a {
+    color: #999;
+  }
+}
+
+form span { white-space: nowrap; }
+input[name=count] { width: 3em; }
+input[name=username] { width: 15em; }
+input[type=checkbox] {
+  position: relative; top: -.2em;
+  margin: 0;
+  padding-right: .2em;
+  margin-bottom: .8em;
+}
+
+input[type=text] {
+  margin-right: .2em;
+  margin-bottom: .8em;
+  padding: .3em;
+  border: 1px solid rgba(#000, .15);
+  font-size: 15px;
+}
+
+label {
+  margin-right: .2em;
+  padding-left: .1em;
+}
+
+h1 {
+  text-align: center;
+  padding: .4em 0;
+}
+
+header { text-align: center; margin-bottom: 1.5em; }
+footer { text-align: center; }
+
+h2 { margin-bottom: .2em; }
+p { margin-top: 0; }
+
+pre {
+  background: rgba(#fff, .5);
+  @include border-radius(.3em);
+  @include box-shadow(rgba(#000, .2) 0 1px 3px inset, rgba(#fff, .5) 0 1px);
+  padding: .5em .8em;
+  font-size: 1.2em;
+  white-space: pre-wrap;
+  margin-bottom: 1.5em;
+}

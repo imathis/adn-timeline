@@ -1,7 +1,7 @@
 
 /*!
 App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
-Version: 1.1
+Version: 1.2
 Source: https://github.com/imathis/adn-timeline/
 */
 
@@ -67,9 +67,13 @@ Source: https://github.com/imathis/adn-timeline/
       text = "<ul id='adn-timeline-" + (options.username || options.hashtag) + "'>";
       for (_i = 0, _len = posts.length; _i < _len; _i++) {
         post = posts[_i];
-        text += "<li><figure class='post'>";
+        text += "<li><figure class='adn-post'>";
         if (post.author.avatar) {
-          text += "<img alt='@" + post.author.username + "'s avatar on App.net' class='adn-author-avatar' width=48 src='" + post.author.avatar + "'>";
+          text += "<a href='" + post.author.url + "' class='adn-author-avatar-link'>";
+          if (post.author.avatar) {
+            text += "<img alt='@" + post.author.username + "'s avatar on App.net' class='adn-author-avatar' width=48 src='" + post.author.avatar + "'>";
+          }
+          text += "</a>";
         }
         text += "<figcaption>";
         if (post.author.unique) {
@@ -206,12 +210,12 @@ Source: https://github.com/imathis/adn-timeline/
         _ref = post.entities.mentions;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           mention = _ref[_i];
-          text = text.replace(new RegExp("@(" + mention.name + ")", "gi"), "<a href='https://alpha.app.net/$1'>@$1</a>");
+          text = text.replace(new RegExp("@(" + mention.name + ")", "gi"), "<a class='adn-username' href='https://alpha.app.net/$1'>@$1</a>");
         }
         _ref1 = post.entities.hashtags;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           hashtag = _ref1[_j];
-          text = text.replace("#" + hashtag.name, "<a href='https://alpha.app.net/hashtags/" + hashtag.name + "'>#" + hashtag.name + "</a>");
+          text = text.replace(new RegExp("#(" + hashtag.name + ")", "gi"), "<a class='adn-hashtag' href='https://alpha.app.net/hashtags/$1'>#$1</a>");
         }
         return text;
       },
@@ -234,7 +238,7 @@ Source: https://github.com/imathis/adn-timeline/
             name: post.user.name,
             url: post.user.canonical_url,
             avatar: avatar,
-            unique: !!(repost || options.hashtag)
+            unique: !!(options.reposts || options.hashtag)
           },
           text: this.linkify(post)
         };

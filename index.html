@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-    <title>ADN Timeline Demo</title>
+    <title>ADN Timeline JS by Brandon Mathis (@imathis)</title>
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
     <script type="text/javascript" src="./javascripts/adn-timeline.js"></script>
-    <link href='./stylesheets/style.css' media="screen" rel="stylesheet" type="text/css">
+    <link href='./stylesheets/demo.css' media="screen" rel="stylesheet" type="text/css">
     <script type="text/javascript">
       (function(){ 
          parseVal = function(str) {
@@ -81,6 +81,11 @@
               e.preventDefault();
             }
           });
+          $('[data-try]').on('click', function(e){
+            $('input[name=name]').val($(e.target).data('try'));
+            fetchTimeline();
+            e.preventDefault();
+          });
         })
       })(this)
     </script>
@@ -93,12 +98,19 @@
       <span><input id=replies type=checkbox name=replies value=true> <label for=replies>replies</label></span>
       <span><input id=reposts type=checkbox name=reposts value=true> <label for=reposts>reposts</label></span>
     </form>
+    <p class='try'>
+      Maybe try <a href='#' data-try='@dalton'>@dalton</a> or <a href='#' data-try='#adn'>#adn</a>.
+    </p>
     <h1 id="title"></h1>
     <div class='adn-timeline'></div>
-    <h2>Live Docs</h2>
-    <p>Using ADN-Timeline is simple.</p>
+    <header>
+      <h2>Live Docs</h2>
+      <p>Using ADN-Timeline is simple.</p>
+    </header>
     <pre class='live-docs'></pre>
-    <p>There's a lot more. Check out the <a href="https://github.com/imathis/adn-timeline/">documentation</a> or <a href="https://raw.github.com/imathis/adn-timeline/master/javascripts/adn-timeline.min.js">get the script</a>.
+    <footer>
+      <p>Check out the <a href="https://github.com/imathis/adn-timeline/">source on Github</a>.</p>
+    </footer>
   </body>
 </html>
 

@@ -1,0 +1,20 @@
+.adn-timeline a { text-decoration: none; }
+.adn-timeline ul { padding-left: 0; list-style: none; }
+.adn-timeline li { margin-bottom: .2em; padding: 1em 1em; }
+.adn-timeline .adn-post { position: relative; padding-right: 2em; word-wrap: break-word; overflow: hidden; margin: 0; }
+.adn-timeline .adn-author-avatar-link { float: left; margin: 0; width: 48px; }
+.adn-timeline .adn-author-avatar-link:hover { text-decoration: none; }
+.adn-timeline .adn-author-avatar-link ~ blockquote, .adn-timeline .adn-author-avatar-link ~ figcaption { margin-left: 60px; }
+.adn-timeline .adn-author-avatar { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.adn-timeline figcaption p { margin-bottom: .5em; }
+.adn-timeline blockquote { margin: 0; }
+.adn-timeline p { margin: 0; }
+.adn-timeline .adn-author-url { color: inherit; }
+.adn-timeline .adn-author-name { font-weight: bold; }
+.adn-timeline .adn-post-url { position: absolute; top: .1em; right: 0; text-decoration: none; font-size: .9em; z-index: 1; }
+.adn-timeline .adn-username { font-weight: bold; }
+.adn-timeline .adn-post-url { color: #999999; }
+.adn-timeline .adn-post-url:hover, .adn-timeline .adn-author-url:hover { color: #418afa; }
+.adn-timeline li { border: 1px solid rgba(0, 0, 0, 0.08); background: whitesmoke; }
+.adn-timeline .adn-author-avatar { -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; }
+.adn-timeline .adn-author-username { opacity: .8; font-size: .9em; }

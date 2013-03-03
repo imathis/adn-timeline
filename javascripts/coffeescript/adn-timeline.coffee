@@ -1,6 +1,6 @@
 ###!
 App.net timeline fetcher (c) 2013 Brandon Mathis, @imathis // MIT License
-Version: 1.1
+Version: 1.2
 Source: https://github.com/imathis/adn-timeline/
 ###
 
@@ -51,8 +51,11 @@ AdnTimeline =
     el = options.el
     text  = "<ul id='adn-timeline-#{options.username or options.hashtag}'>"
     for post in posts
-      text += "<li><figure class='post'>"
-      text += "<img alt='@#{post.author.username}'s avatar on App.net' class='adn-author-avatar' width=48 src='#{post.author.avatar}'>" if post.author.avatar
+      text += "<li><figure class='adn-post'>"
+      if post.author.avatar
+        text += "<a href='#{post.author.url}' class='adn-author-avatar-link'>"
+        text += "<img alt='@#{post.author.username}'s avatar on App.net' class='adn-author-avatar' width=48 src='#{post.author.avatar}'>" if post.author.avatar
+        text += "</a>"
       text += "<figcaption>"
       if post.author.unique
         text += "<p>"
@@ -159,8 +162,8 @@ AdnTimeline =
 
       # Using entities from the API ensures we never accidentally link a username with no account.
       # We could use a regex for hastags but this format is more clear and there's no worry that our regex differs from App.net.
-      text = text.replace new RegExp("@(#{mention.name})", "gi"), "<a href='https://alpha.app.net/$1'>@$1</a>" for mention in post.entities.mentions
-      text = text.replace "##{hashtag.name}", "<a href='https://alpha.app.net/hashtags/#{hashtag.name}'>##{hashtag.name}</a>" for hashtag in post.entities.hashtags
+      text = text.replace new RegExp("@(#{mention.name})", "gi"), "<a class='adn-username' href='https://alpha.app.net/$1'>@$1</a>" for mention in post.entities.mentions
+      text = text.replace new RegExp("#(#{hashtag.name})", "gi"), "<a class='adn-hashtag' href='https://alpha.app.net/hashtags/$1'>#$1</a>" for hashtag in post.entities.hashtags
       text
 
     postData: (post, options) ->
@@ -172,7 +175,7 @@ AdnTimeline =
         url: post.canonical_url
         date: post.created_at
         display_date: @timeago post.created_at
-        author: { username: post.user.username, name: post.user.name, url: post.user.canonical_url, avatar: avatar, unique: !!(repost or options.hashtag) }
+        author: { username: post.user.username, name: post.user.name, url: post.user.canonical_url, avatar: avatar, unique: !!(options.reposts or options.hashtag) }
         text: @linkify post
       }
 

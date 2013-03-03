@@ -1,0 +1,9 @@
+// This isn't the file you're looking for.
+// This file just exists to get Compass to generate a standalone CSS file.
+// Grab the _adn-timeline.scss partial and import it in your stylesheets somewhere.
+@import 'adn-timeline';
+
+.adn-timeline {
+  @include adn-timeline-layout;
+  @include adn-timeline-theme;
+}
