@@ -20,7 +20,7 @@ standalone version with jXHR or something.
 
 First include the necessary scripts.
 
-```
+```html
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/javascripts/lib/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/javascripts/adn-timeline.js"></script>
@@ -30,7 +30,7 @@ First include the necessary scripts.
 
 Next, initialize your ADN timeline.
 
-```
+```js
 $(document).ready(function(){
   AdnTimeline.init()
 })
@@ -38,13 +38,13 @@ $(document).ready(function(){
 
 Finally, somehwere on your page, add a block-level element (probably a `div` or a `section`) with a class `adn-timeline` and add your username a `data-username` attribute.
 
-```
+```html
 <div class='adn-timeline' data-username='imathis'></div>
 ```
 
 To add a timeline for a hashtag do this.
 
-```
+```html
 <div class='adn-timeline' data-hashtag='adn'></div>
 ```
 
@@ -52,7 +52,7 @@ To add a timeline for a hashtag do this.
 
 If you want to have more than one feed on your page, just add another div with a different username.
 
-```
+```html
 <div class='adn-timeline' data-username='imathis'></div>
 <div class='adn-timeline' data-username='octopress'></div>
 ```
@@ -60,7 +60,7 @@ If you want to have more than one feed on your page, just add another div with a
 Note: Data is appended to the target elements so we can have content in these elements without worring that it will be overwritten. It would make sense to do something
 like this.
 
-```
+```html
 <div class='adn-timeline' data-user='imathis'>
   <h4>@imathis on App.net</h4>
 </div>
@@ -112,7 +112,7 @@ Note: Setting `cookie` to false will disable cookie storage. This is especially 
 In the simple example above we configured the username using an HTML5 data attribute. All configurations may be set with data attributes except for `el`, `callback` and `render` which must be set with an options hash.
 Here's an example.
 
-```
+```html
 <div class='.adn-timeline' data-username='imathis' data-count='10' data-replies='true' data-reposts='true' data-cookie='delicious-cookie'></div>
 ```
 
@@ -120,7 +120,7 @@ Here's an example.
 
 Using an options hash allows us to change the selector and use a custom callback.
 
-```
+```js
 $(document).ready(function(){
   AdnTimeline.init({
       el:      '.timeline'
@@ -139,7 +139,7 @@ $(document).ready(function(){
 
 Options are loaded in order of the element data attributes, the options hash, and finally the defaults. This means we can combine methods of setting options like this.
 
-```
+```js
 $(document).ready(function(){
   AdnTimeline.init({
       el:      '.timeline'
@@ -148,7 +148,7 @@ $(document).ready(function(){
 })
 ```
 
-```
+```html
 <div class='timeline' data-username='imathis'></div>
 <div class='timeline' data-username='octopress' data-reposts='true'></div>
 ```
@@ -160,7 +160,7 @@ Here we have changed the selector used, both accounts will show replies, and the
 In the example above we set reposts to true for @Octopress but not for @imathis. If we configured it in the options hash it would have applied to both accounts. It's
 probably easier to set that configuration with a data attribute, but AdnTimeline also accepts an array of option hashes. We do the same configuration above like this.
 
-```
+```js
 $(document).ready(function(){
   AdnTimeline.init([
     {
@@ -179,7 +179,7 @@ $(document).ready(function(){
 
 Then the HTML will no longer need `data-username` attributes since the configuration is derived from the options array. Note that the `el` property now must be unique.
 
-```
+```html
 <div class='timeline-imathis'></div>
 <div class='timeline-octopress'></div>
 ```
@@ -191,7 +191,7 @@ attributes, but in some cases it might be helpful to configure things more dynam
 
 For a user timeline the default render function appends the following HTML template to the target element(s).
 
-```
+```html
 <ul>
   <li>
     <figure class="post">
@@ -211,7 +211,7 @@ For a user timeline the default render function appends the following HTML templ
 
 For a repost inside of a user's timeline, the original author information is included in the `figcaption` like this.
 
-```
+```html
 <figcaption>
 <p>
   <span class="adn-repost-marker">>> </span>
@@ -240,7 +240,7 @@ like this. This would mean they would have to change their site designs to be le
 
 It's fairly easy add a custom render function. The function will receive the options array (including the jQuery wrapped element at options.el) and a array of post data hashes with the following format:
 
-```
+```js
 author: {
   username:   post.user.username,
   name:       post.user.name,
@@ -259,7 +259,7 @@ repost:       true or false based on the post.repost_of
 
 To write a custom render function we can simply pass it as an option in the options hash. Adding a custom render function could be as simple as this.
 
-```
+```js
 AdnTimeline.init({
   render: (function(options, posts) {
     var html, i, len
@@ -277,7 +277,7 @@ AdnTimeline.init({
 
 Which would output:
 
-```
+```html
 <ul>
   <li>
     <p>post text<p>
