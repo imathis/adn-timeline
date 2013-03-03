@@ -240,7 +240,7 @@ like this. This would mean they would have to change their site designs to be le
 
 It's fairly easy add a custom render function. The function will receive the options array (including the jQuery wrapped element at options.el) and a array of post data hashes with the following format:
 
-```js
+```
 author: {
   username:   post.user.username,
   name:       post.user.name,
