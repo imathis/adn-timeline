@@ -16,10 +16,10 @@
 .adn-timeline .adn-username { font-weight: bold; }
 .adn-timeline .adn-post-url { color: #999999; }
 .adn-timeline .adn-post-url:hover, .adn-timeline .adn-author-url:hover { color: #418afa; }
-.adn-timeline li { border: 1px solid rgba(0, 0, 0, 0.08); background: whitesmoke; }
 .adn-timeline .adn-author-avatar { -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; }
 .adn-timeline .adn-author-username { opacity: .8; font-size: .9em; }
 .adn-timeline ul { -webkit-animation: fade-in 0.4s ease-out; -moz-animation: fade-in 0.4s ease-out; -o-animation: fade-in 0.4s ease-out; animation: fade-in 0.4s ease-out; }
+.adn-timeline li { background: #f5f5f5; border: 1px solid rgba(0, 0, 0, 0.08); }
 
 @-moz-keyframes fade-in { 0% { opacity: 0; }
   100% { opacity: 1; } }

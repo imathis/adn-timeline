@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Removed some default styles for better visual compatability and less configuration.
+
 ## 1.2
 
 - Added adn-timeline stylesheets (SCSS and CSS) for styled embedding.
