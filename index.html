@@ -38,7 +38,7 @@
         }
 
         getDemoDiv = function (options) {
-          div = $('<div>')
+          div = $('<div class="adn-timeline">')
           for (var key in options) {
             if (options.hasOwnProperty(key)) {
               div.attr('data-'+key, options[key]);
@@ -110,6 +110,7 @@
     <pre class='live-docs'></pre>
     <footer>
       <p>Check out the <a href="https://github.com/imathis/adn-timeline/">source on Github</a>.</p>
+      <p>Using Octopress? <a href="https://github.com/octopress/adn-timeline/">You'll want this</a>.</p>
     </footer>
   </body>
 </html>
