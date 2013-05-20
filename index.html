@@ -38,7 +38,7 @@
         }
 
         getDemoDiv = function (options) {
-          div = $('<div>')
+          div = $('<div class="adn-timeline">')
           for (var key in options) {
             if (options.hasOwnProperty(key)) {
               div.attr('data-'+key, options[key]);
