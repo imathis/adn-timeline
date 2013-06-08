@@ -5,7 +5,7 @@
 .adn-timeline .adn-post { position: relative; padding-right: 2em; word-wrap: break-word; overflow: hidden; margin: 0; }
 .adn-timeline .adn-author-avatar-link { float: left; margin: 0; width: 48px; }
 .adn-timeline .adn-author-avatar-link:hover { text-decoration: none; }
-.adn-timeline .adn-author-avatar-link ~ blockquote, .adn-timeline .adn-author-avatar-link ~ figcaption { margin-left: 60px; }
+.adn-timeline .adn-author-avatar-link ~ blockquote, .adn-timeline .adn-author-avatar-link ~ figcaption, .adn-timeline .adn-author-avatar-link ~ .adn-reposted { margin-left: 60px; }
 .adn-timeline .adn-author-avatar { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
 .adn-timeline figcaption p { margin-bottom: .5em; }
 .adn-timeline blockquote { margin: 0; }
@@ -18,6 +18,9 @@
 .adn-timeline .adn-post-url:hover, .adn-timeline .adn-author-url:hover { color: #418afa; }
 .adn-timeline .adn-author-avatar { -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px; }
 .adn-timeline .adn-author-username { opacity: .8; font-size: .9em; }
+.adn-timeline .adn-reposted { margin-top: .9em; font-size: .9em; opacity: .8; }
+.adn-timeline .adn-reposted a { color: inherit; }
+.adn-timeline .adn-repost-marker { font-size: 1.1em; line-height: 1em; }
 .adn-timeline ul { -webkit-animation: fade-in 0.4s ease-out; -moz-animation: fade-in 0.4s ease-out; -o-animation: fade-in 0.4s ease-out; animation: fade-in 0.4s ease-out; }
 .adn-timeline li { background: #f5f5f5; border: 1px solid rgba(0, 0, 0, 0.08); }
 

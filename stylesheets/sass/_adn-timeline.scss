@@ -21,6 +21,16 @@
     opacity: .8;
     font-size: .9em;
   }
+  .adn-reposted {
+    margin-top: .9em;
+    font-size: .9em;
+    opacity: .8;
+    a { color: inherit; }
+  }
+  .adn-repost-marker {
+    font-size: 1.1em;
+    line-height: 1em;
+  }
 }
 
 @mixin adn-timeline-layout(){
@@ -51,7 +61,7 @@
     width: 48px;
     &:hover { text-decoration: none; }
 
-    ~ blockquote, ~ figcaption {
+    ~ blockquote, ~ figcaption, ~ .adn-reposted {
       margin-left: 60px;
     }
   }

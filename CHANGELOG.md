@@ -1,3 +1,9 @@
+## 1.3
+
+- AdnTimeline is now a class, instantiate with `new AdnTimeline([options])`.
+- Now for reposts, post.reposted  contains a hash of the reposting account's username, name and url.
+- Improved styling for reposted posts
+
 ## 1.2.1
 
 - Removed some default styles for better visual compatability and less configuration.

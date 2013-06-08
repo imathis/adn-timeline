@@ -5,7 +5,7 @@ Source: https://github.com/imathis/adn-timeline/
 ###
 
 
-AdnTimeline =
+class AdnTimeline
   defaults:
     el: '.adn-timeline'
     count: 4
@@ -17,7 +17,7 @@ AdnTimeline =
   # A page can render multiple timelines
   # Options can be passed as simple hash, but an array allows multiple timelines to be configured independantly
   # If no options are passed init will look for elements with the class '.adn-feed' and read data attributes to configure options
-  init: (optionsArray=[{}]) ->
+  constructor: (optionsArray=[{}]) ->
     
     # Single options hashes are dropped into an array to unify the approach
     optionsArray = [optionsArray] unless optionsArray instanceof Array
@@ -27,7 +27,7 @@ AdnTimeline =
       # Options are loaded in order of element data-attributes, passed options, and finally defaults.
       $(options.el or @defaults.el).each (i, el) =>
         el = $(el)
-        renderer = options.render or @render
+        options.render or= @render
         callback = options.callback or (->)
         options = $.extend({}, @defaults, options, el.data())
         options.el = el
@@ -36,7 +36,7 @@ AdnTimeline =
         return console.error 'You need to provide an App.net username or hashtag' unless options.username? or options.hashtag?
         options.cookie = options.cookie + "-#{options.username or options.hashtag}" if options.cookie is @defaults.cookie
 
-        @timeline(@helpers).fetch renderer, callback, options
+        @timeline(@helpers).fetch @render, callback, options
     @
 
   # Walk through a series of options, returning the first option which is not undefined or NaN.
@@ -54,12 +54,11 @@ AdnTimeline =
       text += "<li><figure class='adn-post'>"
       if post.author.avatar
         text += "<a href='#{post.author.url}' class='adn-author-avatar-link'>"
-        text += "<img alt='@#{post.author.username}'s avatar on App.net' class='adn-author-avatar' width=48 src='#{post.author.avatar}'>" if post.author.avatar
+        text += "<img alt='@#{post.author.username}'s avatar on App.net' class='adn-author-avatar' width=48 src='#{post.author.avatar}'>"
         text += "</a>"
       text += "<figcaption>"
       if post.author.unique
         text += "<p>"
-        text += "<span class='adn-repost-marker'>>></span> " if post.repost
         text += "<a href='#{post.author.url}' class='adn-author-url' rel=author>"
         text += "<strong class='adn-author-name'>#{post.author.name}</strong> <span class='adn-author-username'>@#{post.author.username}</span>"
         text += "</a></p>"
@@ -68,6 +67,7 @@ AdnTimeline =
       text += "<blockquote><p>"
       text += post.text
       text += "</p></blockquote>"
+      text += "<p class='adn-reposted'><span class='adn-repost-marker'>➥</span> reposted by <a href='#{post.repost.user.url}'>#{post.repost.user.name}</a></p>" if post.repost
       text += "</figure></li>"
     text += "</ul>"
     el.append text
@@ -76,8 +76,8 @@ AdnTimeline =
   timeline: (helpers) ->
     data: []
 
-    # Lets get some data!
-    fetch: (renderer, callback, options) ->
+    # Let's get some data!
+    fetch: (render, callback, options) ->
       
       # Using the jquery cookies plugin is optional, but recommended
       # When testing we can set cookie to false to disable cookie storage
@@ -85,9 +85,9 @@ AdnTimeline =
         data = JSON.parse posts
         if data.length isnt options.count
           $.removeCookie options.cookie
-          @fetch renderer, callback, options
+          @fetch render, callback, options
         else 
-          renderer options, data
+          options.render options, data, render
           callback data
       else
         url =  "https://alpha-api.app.net/stream/0/"
@@ -118,14 +118,14 @@ AdnTimeline =
 
               # Set before_id and fetch the next page of posts
               options.before_id = response.meta.min_id
-              @fetch renderer, callback, options
+              @fetch render, callback, options
 
             else 
               # Now that we have enough posts, let's condense the data and store a cookie if possible.
               @data = (helpers.postData post, options for post in @data.slice(0, options.count))
               $.cookie(options.cookie, JSON.stringify @data, { path: '/' }) if $.cookie and options.cookie
 
-              renderer options, @data
+              options.render options, @data, render
               callback @data
   
   # Post parsing helpers are scoped for easier internal referencing when passed into timeline
@@ -167,7 +167,7 @@ AdnTimeline =
       text
 
     postData: (post, options) ->
-      repost = !!(post.repost_of)
+      repost = if !!(post.repost_of) then { user: { username: post.user.username, name: post.user.name, ur: post.user.canonical_url } } else false
       post = post.repost_of if repost
       avatar = post.user.avatar_image.url if options.avatars
       {
