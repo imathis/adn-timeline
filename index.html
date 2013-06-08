@@ -52,20 +52,20 @@
             options = parseInputs(),
             demoDiv = getDemoDiv(options)
 
-          options.render = function(opts, data) {
+          options.render = function(opts, data, render) {
             opts.el.html('')
             if (opts.hashtag) titleLink.attr('href', 'https://alpha.app.net/hashtags/'+opts.hashtag).html('#'+opts.hashtag)
             else titleLink.attr('href', 'https://alpha.app.net/'+opts.username).html('@'+opts.username)
             $('#title').html('').append([titleLink, " on App.net"])
-            AdnTimeline.render(opts, data)
+            render(opts, data)
           }
           options.callback = function(){
-            text  = "<script type=\"text/javascript\">\n  $(document).ready(function(){\n    AdnTimeline.init();\n  });\n<\/script>\n\n"
+            text  = "<script type=\"text/javascript\">\n  $(document).ready(function(){\n    new AdnTimeline();\n  });\n<\/script>\n\n"
             text += demoDiv
             $('.live-docs').text(text)
           }
 
-          AdnTimeline.init(options)
+          new AdnTimeline(options)
         }
 
         $(document).ready(function(){

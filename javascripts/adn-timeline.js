@@ -10,16 +10,18 @@ Source: https://github.com/imathis/adn-timeline/
   var AdnTimeline, exports,
     __slice = [].slice;
 
-  AdnTimeline = {
-    defaults: {
+  AdnTimeline = (function() {
+
+    AdnTimeline.prototype.defaults = {
       el: '.adn-timeline',
       count: 4,
       replies: false,
       reposts: false,
       cookie: 'adn-timeline',
       avatars: false
-    },
-    init: function(optionsArray) {
+    };
+
+    function AdnTimeline(optionsArray) {
       var options, _i, _len,
         _this = this;
       if (optionsArray == null) {
@@ -31,9 +33,9 @@ Source: https://github.com/imathis/adn-timeline/
       for (_i = 0, _len = optionsArray.length; _i < _len; _i++) {
         options = optionsArray[_i];
         $(options.el || this.defaults.el).each(function(i, el) {
-          var callback, renderer, _ref, _ref1;
+          var callback, _ref, _ref1;
           el = $(el);
-          renderer = options.render || _this.render;
+          options.render || (options.render = _this.render);
           callback = options.callback || (function() {});
           options = $.extend({}, _this.defaults, options, el.data());
           options.el = el;
@@ -45,12 +47,13 @@ Source: https://github.com/imathis/adn-timeline/
           if (options.cookie === _this.defaults.cookie) {
             options.cookie = options.cookie + ("-" + (options.username || options.hashtag));
           }
-          return _this.timeline(_this.helpers).fetch(renderer, callback, options);
+          return _this.timeline(_this.helpers).fetch(_this.render, callback, options);
         });
       }
-      return this;
-    },
-    cascadeOptions: function() {
+      this;
+    }
+
+    AdnTimeline.prototype.cascadeOptions = function() {
       var option, options, _i, _len;
       options = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       for (_i = 0, _len = options.length; _i < _len; _i++) {
@@ -60,8 +63,9 @@ Source: https://github.com/imathis/adn-timeline/
           break;
         }
       }
-    },
-    render: function(options, posts) {
+    };
+
+    AdnTimeline.prototype.render = function(options, posts) {
       var el, post, text, _i, _len;
       el = options.el;
       text = "<ul id='adn-timeline-" + (options.username || options.hashtag) + "'>";
@@ -70,17 +74,12 @@ Source: https://github.com/imathis/adn-timeline/
         text += "<li><figure class='adn-post'>";
         if (post.author.avatar) {
           text += "<a href='" + post.author.url + "' class='adn-author-avatar-link'>";
-          if (post.author.avatar) {
-            text += "<img alt='@" + post.author.username + "'s avatar on App.net' class='adn-author-avatar' width=48 src='" + post.author.avatar + "'>";
-          }
+          text += "<img alt='@" + post.author.username + "'s avatar on App.net' class='adn-author-avatar' width=48 src='" + post.author.avatar + "'>";
           text += "</a>";
         }
         text += "<figcaption>";
         if (post.author.unique) {
           text += "<p>";
-          if (post.repost) {
-            text += "<span class='adn-repost-marker'>>></span> ";
-          }
           text += "<a href='" + post.author.url + "' class='adn-author-url' rel=author>";
           text += "<strong class='adn-author-name'>" + post.author.name + "</strong> <span class='adn-author-username'>@" + post.author.username + "</span>";
           text += "</a></p>";
@@ -90,24 +89,28 @@ Source: https://github.com/imathis/adn-timeline/
         text += "<blockquote><p>";
         text += post.text;
         text += "</p></blockquote>";
+        if (post.repost) {
+          text += "<p class='adn-reposted'><span class='adn-repost-marker'>➥</span> reposted by <a href='" + post.repost.user.url + "'>" + post.repost.user.name + "</a></p>";
+        }
         text += "</figure></li>";
       }
       text += "</ul>";
       return el.append(text);
-    },
-    timeline: function(helpers) {
+    };
+
+    AdnTimeline.prototype.timeline = function(helpers) {
       return {
         data: [],
-        fetch: function(renderer, callback, options) {
+        fetch: function(render, callback, options) {
           var data, posts, url,
             _this = this;
           if ($.cookie && options.cookie && (posts = $.cookie(options.cookie))) {
             data = JSON.parse(posts);
             if (data.length !== options.count) {
               $.removeCookie(options.cookie);
-              return this.fetch(renderer, callback, options);
+              return this.fetch(render, callback, options);
             } else {
-              renderer(options, data);
+              options.render(options, data, render);
               return callback(data);
             }
           } else {
@@ -148,7 +151,7 @@ Source: https://github.com/imathis/adn-timeline/
                 _this.data = _this.data.concat(response.data);
                 if (_this.data.length < options.count) {
                   options.before_id = response.meta.min_id;
-                  return _this.fetch(renderer, callback, options);
+                  return _this.fetch(render, callback, options);
                 } else {
                   _this.data = (function() {
                     var _j, _len1, _ref1, _results;
@@ -165,7 +168,7 @@ Source: https://github.com/imathis/adn-timeline/
                       path: '/'
                     }));
                   }
-                  renderer(options, _this.data);
+                  options.render(options, _this.data, render);
                   return callback(_this.data);
                 }
               }
@@ -173,8 +176,9 @@ Source: https://github.com/imathis/adn-timeline/
           }
         }
       };
-    },
-    helpers: {
+    };
+
+    AdnTimeline.prototype.helpers = {
       trimUrl: function(url) {
         var max, part, parts, short, _i, _len, _ref;
         parts = [];
@@ -221,7 +225,13 @@ Source: https://github.com/imathis/adn-timeline/
       },
       postData: function(post, options) {
         var avatar, repost;
-        repost = !!post.repost_of;
+        repost = !!post.repost_of ? {
+          user: {
+            username: post.user.username,
+            name: post.user.name,
+            ur: post.user.canonical_url
+          }
+        } : false;
         if (repost) {
           post = post.repost_of;
         }
@@ -288,8 +298,11 @@ Source: https://github.com/imathis/adn-timeline/
           }
         }
       }
-    }
-  };
+    };
+
+    return AdnTimeline;
+
+  })();
 
   if (typeof exports !== "undefined" && exports !== null) {
     if ((typeof module !== "undefined" && module !== null) && module.exports) {
