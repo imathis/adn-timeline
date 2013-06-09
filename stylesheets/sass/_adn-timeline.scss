@@ -1,6 +1,8 @@
 @import 'compass/css3';
+$adn-timeline-link-subdued: #999 !default;
+$adn-timeline-link-subdued-hover: #418afa !default;
 
-@mixin adn-timeline-theme($link-subdued: #999, $link-subdued-hover: #418afa) {
+@mixin adn-timeline-theme($link-subdued: $adn-timeline-link-subdued, $link-subdued-hover: $adn-timeline-link-subdued-hover) {
   .adn-username {
     font-weight: bold;
   }
@@ -89,3 +91,4 @@
     z-index: 1;
   }
 }
+

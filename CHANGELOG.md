@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Added option to use global sass variables to set styles.
+
 ## 1.3
 
 - AdnTimeline is now a class, instantiate with `new AdnTimeline([options])`.
