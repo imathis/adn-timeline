@@ -1,6 +1,7 @@
 ## 1.3.1
 
 - Added option to use global sass variables to set styles.
+- Fixed module.exports to be compatible with Stitch.rb and Octopress
 
 ## 1.3
 

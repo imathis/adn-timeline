@@ -216,7 +216,7 @@ class AdnTimeline
 # CommonJS Footer
 if exports? 
   if module? and module.exports
-    exports = module.exports = AdnTimeline
+    module.exports = AdnTimeline
   else
     exports.AdnTimeline = AdnTimeline
 else
